@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import sbError from "../errors/sbError";
-import { VALIDATION_ERR } from "../errors/errorTypes";
+import { DATABASE_CONNECTION_ERR, NOT_FOUND_ERR, VALIDATION_ERR } from "../errors/errorTypes";
 
 interface ErrorResponseType {
     message: string
@@ -16,6 +16,15 @@ export const errorHandler = (err: sbError, req: Request, res: Response, next: Ne
             statusCode = 403;
             errors = validationErrorHandler(err);
             break;
+        case DATABASE_CONNECTION_ERR:
+            statusCode = 500;
+            errors = databaseConnectionErrorHandler(err);
+            break;
+        case NOT_FOUND_ERR: {
+            statusCode = 404;
+            errors = notFoundErrorHandler(err);
+            break;
+        }
         default:
             console.log('unknow error')
     }
@@ -27,8 +36,19 @@ export const errorHandler = (err: sbError, req: Request, res: Response, next: Ne
 
 const validationErrorHandler = (err: sbError): ErrorResponseType[] => {
     let errors = [];
-    for (let index in err.message) {
-        errors.push({ message: err.message[index].msg, field: err.message[index].path })
+    for (let index in err.param) {
+        errors.push({ message: err.param[index].msg, field: err.param[index].path })
     }
+    return errors;
+}
+
+const databaseConnectionErrorHandler = (err: sbError): ErrorResponseType[] => {
+    let errors = [{ message: 'Error connecting to database', field: 'database' }];
+    return errors;
+}
+
+const notFoundErrorHandler = (err: sbError): ErrorResponseType[] => {
+    let errors = [{ message: 'Requested rotue was not found!', field: err.param[0].field }]
+    console.log(errors)
     return errors;
 }
