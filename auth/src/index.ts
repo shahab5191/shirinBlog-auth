@@ -5,6 +5,7 @@ import { currentUserRouter } from "./routes/currentuser";
 import { signinRouter } from "./routes/signin";
 import { signupRouter } from "./routes/signup";
 import { signoutRouter } from "./routes/signout";
+import { errorHandler } from "./middlewares/errorHandler";
 dotenv.config();
 
 console.log(process.env.PORT)
@@ -19,6 +20,8 @@ app.use(currentUserRouter)
 app.use(signinRouter)
 app.use(signupRouter)
 app.use(signoutRouter)
+
+app.use(errorHandler)
 
 app.listen(PORT, () => {
     console.log(`🖥️ is running on port ${PORT}!`)
