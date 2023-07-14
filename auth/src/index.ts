@@ -11,11 +11,11 @@ const app: Application = express();
 app.use(express.json());
 app.use(morgan("tiny"));
 
-app.get("/", async (req: Request, res: Response) => {
+app.get("/api/users/test", async (req: Request, res: Response) => {
     console.log('initial code');
     res.status(200).send('initial code');
 })
-console.log('test')
+
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}!`)
+    console.log(`🖥️ is running on port ${PORT}!`)
 })
