@@ -8,6 +8,7 @@ import { signoutRouter } from "./routes/signout";
 import { errorHandler } from "./middlewares/errorHandler";
 import sbError from "./errors/sbError";
 import { NOT_FOUND_ERR } from "./errors/errorTypes";
+import mongoose from 'mongoose'
 
 dotenv.config();
 
@@ -30,6 +31,18 @@ app.all('*', () => {
 
 app.use(errorHandler)
 
-app.listen(PORT, () => {
-    console.log(`🖥️ is running on port ${PORT}!`)
-})
+const startService = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth').then(() => { console.log('connected to db') })
+    }
+    catch (err) {
+        console.log(err);
+    }
+
+    app.listen(PORT, () => {
+        console.log(`🖥️ is running on port ${PORT}!`)
+    })
+
+}
+
+startService()

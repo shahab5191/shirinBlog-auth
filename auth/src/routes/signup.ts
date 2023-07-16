@@ -2,6 +2,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import { body, validationResult } from 'express-validator'
 import sbError from '../errors/sbError';
 import { VALIDATION_ERR } from '../errors/errorTypes';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -18,6 +19,7 @@ router.post('/api/users/signup', [
 
     const { email, password } = req.body;
 
+    
     console.log('Create user');
     res.send({});
 
