@@ -9,12 +9,12 @@
     "start": "npm run build && node ./build/index.js",
     "test": "jest --watchAll --no-cache"
   },
-  "jest":{
+  "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
     "globalSetup": "<rootDir>/src/tests/setup/globalSetup.ts",
     "globalTeardown": "<rootDir>/src/tests/setup/globalTeardown.ts",
-    "setupFilesAfterEnv":[
+    "setupFilesAfterEnv": [
       "./src/tests/setup/setup.ts"
     ]
   },
@@ -31,6 +31,7 @@
     "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
+    "cookie-session": "^2.0.0",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "express-validator": "^7.0.1",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
+    "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.3",
     "@types/jsonwebtoken": "^9.0.2",

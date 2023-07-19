@@ -27,13 +27,14 @@ router.post('/api/users/signup', [
 
     const hashedPassword = await hashPassword(password);
 
-    const newUser = new User({ email, password: hashedPassword, accessLevel: 'user'});
+    const newUser = new User({ email, password: hashedPassword, accessLevel: 'user' });
     await newUser.save()
 
     const token = createToken({ email: newUser.email, id: newUser.id });
 
+    req.session = { jwt: token };
 
-    res.status(201).send({ email:newUser.email, id:newUser.id, token });
+    res.status(201).send({ email: newUser.email, id: newUser.id});
 
 });
 
