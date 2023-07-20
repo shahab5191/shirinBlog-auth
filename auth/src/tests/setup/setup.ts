@@ -9,7 +9,7 @@ beforeEach(async () => {
     for (let collection of collections) {
         await collection.deleteMany({});
     }
-},30000)
+})
 
 afterAll(async () => {
     await mongoose.disconnect();

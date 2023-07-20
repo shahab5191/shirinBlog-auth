@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import sbError from "../errors/sbError";
-import { DATABASE_CONNECTION_ERR, NOT_FOUND_ERR, SERVER_ERR, USER_CREATION_ERR, VALIDATION_ERR } from "../errors/errorTypes";
+import { DATABASE_CONNECTION_ERR, NOT_FOUND_ERR, SERVER_ERR, USER_CREATION_ERR, WRONG_CREDENTIALS, VALIDATION_ERR } from "../errors/errorTypes";
 
 interface ErrorResponseType {
     message: string
@@ -28,13 +28,20 @@ export const errorHandler = (err: sbError, req: Request, res: Response, next: Ne
         case SERVER_ERR: {
             statusCode = 500;
             errors = serverError(err);
+            break;
         }
         case USER_CREATION_ERR: {
             statusCode = 400;
             errors = userCreationError(err);
+            break;
+        }
+        case WRONG_CREDENTIALS: {
+            statusCode = 404;
+            errors = userDoesNotExist(err);
+            break;
         }
         default:
-            console.log('unknow error')
+            console.log(err)
     }
 
     res.status(statusCode).json({ errors });
@@ -62,11 +69,16 @@ const notFoundErrorHandler = (err: sbError): ErrorResponseType[] => {
 }
 
 const serverError = (err: sbError): ErrorResponseType[] => {
-    let errors = [{ message: 'Somthing went wrong! Please try again later', field: err.param}];
+    let errors = [{ message: 'Somthing went wrong! Please try again later', field: err.param }];
     return errors;
 }
 
 const userCreationError = (err: sbError): ErrorResponseType[] => {
     let errors = [{ message: 'Cannot create this user!', field: err.param }];
     return errors;
+}
+
+const userDoesNotExist = (err: sbError): ErrorResponseType[] => {
+    let errors = [{ message: 'Wrong credentials', field: err.param }];
+    return errors
 }

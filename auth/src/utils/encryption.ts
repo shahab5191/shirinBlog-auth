@@ -13,7 +13,12 @@ const createToken = (inputs: TokenInputs) => {
     return token;
 }
 
-const hashPassword = async (password:string) => {
+const verifyToken = async (token: string) => {
+    const decodedToken = jwt.verify(token, 'secret')
+    console.log(decodedToken)
+}
+
+const hashPassword = async (password: string) => {
     let hashedPassword = "";
     try {
         hashedPassword = await bcrypt.genSalt(10).then(salt => { return bcrypt.hash(password, salt) });
@@ -27,5 +32,8 @@ const hashPassword = async (password:string) => {
     return hashedPassword;
 }
 
+const comparePassword = async (reqPassword: string, hashedPassword: string) => {
+    return await bcrypt.compare(reqPassword, hashedPassword);
+}
 
-export { createToken, hashPassword };
+export { createToken, hashPassword, verifyToken, comparePassword };

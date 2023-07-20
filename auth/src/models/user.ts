@@ -4,7 +4,7 @@ import mongoose, { Schema } from "mongoose";
 interface UserInputs {
     email: string;
     password: string;
-    accessLevel: "admin" | "author" | "vip" | "user";
+    accessLevel: "admin" | "user";
 }
 
 //user document properties
@@ -16,7 +16,7 @@ interface UserDoc extends mongoose.Document {
     image: string;
     signupAt: Date;
     lastLogin: Date;
-    accessLevel: "admin" | "author" | "vip" | "user";
+    accessLevel: "admin" | "user";
     likes: Schema.Types.ObjectId;
     recipes: Schema.Types.ObjectId;
 }
