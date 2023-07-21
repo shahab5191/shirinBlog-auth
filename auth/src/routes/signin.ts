@@ -3,7 +3,7 @@ import { body, validationResult } from 'express-validator'
 import sbError from '../errors/sbError';
 import { WRONG_CREDENTIALS, VALIDATION_ERR } from '../errors/errorTypes';
 import User from '../models/user';
-import { comparePassword, createToken, verifyToken } from '../utils/encryption';
+import { comparePassword, createToken } from '../utils/encryption';
 
 const router = express.Router();
 
@@ -19,7 +19,6 @@ router.post('/api/users/signin', [
     if (!errors.isEmpty()) {
         return next(new sbError(VALIDATION_ERR, errors.array()));
     }
-
     const { email, password } = req.body;
 
     const requestedUser = await User.findOne({ email });
@@ -33,7 +32,6 @@ router.post('/api/users/signin', [
     }
 
     const token = createToken({ id: requestedUser.id, email: requestedUser.email });
-
     req.session = { jwt: token };
     res.status(200).send({ email: requestedUser.email, id: requestedUser.id })
 });

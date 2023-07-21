@@ -10,12 +10,12 @@ interface CreateUserAttr {
 const createUser = async (attr: CreateUserAttr) => {
     const email = `test${randomInt(0, 9999)}@test${randomInt(0, 9999)}.com`
     const password = `password${randomInt(0, 9999)}`;
-    await request(app)
+    const response = await request(app)
         .post('/api/users/signup')
         .send({ email: attr.email ? attr.email : email, password: attr.password ? attr.password : password })
         .expect(201)
 
-    return { email, password };
+    return { email, password, headers: response.headers };
 }
 
 export { createUser }

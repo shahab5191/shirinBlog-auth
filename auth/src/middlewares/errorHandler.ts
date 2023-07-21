@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import sbError from "../errors/sbError";
-import { DATABASE_CONNECTION_ERR, NOT_FOUND_ERR, SERVER_ERR, USER_CREATION_ERR, WRONG_CREDENTIALS, VALIDATION_ERR } from "../errors/errorTypes";
+import { DATABASE_CONNECTION_ERR, NOT_FOUND_ERR, SERVER_ERR, USER_CREATION_ERR, WRONG_CREDENTIALS, VALIDATION_ERR, USER_IS_NOT_LOGGED_IN, USER_NOT_FOUND } from "../errors/errorTypes";
 
 interface ErrorResponseType {
     message: string
@@ -40,11 +40,21 @@ export const errorHandler = (err: sbError, req: Request, res: Response, next: Ne
             errors = userDoesNotExist(err);
             break;
         }
+        case USER_IS_NOT_LOGGED_IN: {
+            statusCode = 403;
+            errors = userIsNotLoggedIn(err);
+            break;
+        }
+        case USER_NOT_FOUND:{
+            statusCode = 404;
+            errors = userNotFound(err);
+            break;
+        }
         default:
             console.log(err)
     }
 
-    res.status(statusCode).json({ errors });
+    res.status(statusCode).send({ errors });
     return next();
 }
 
@@ -80,5 +90,15 @@ const userCreationError = (err: sbError): ErrorResponseType[] => {
 
 const userDoesNotExist = (err: sbError): ErrorResponseType[] => {
     let errors = [{ message: 'Wrong credentials', field: err.param }];
+    return errors
+}
+
+const userIsNotLoggedIn = (err: sbError): ErrorResponseType[] => {
+    let errors = [{ message: 'User is not logged in', field: err.param }]
+    return errors
+}
+
+const userNotFound = (err: sbError): ErrorResponseType[] => {
+    let errors = [{ message: 'User was not found', field: err.param }];
     return errors
 }
