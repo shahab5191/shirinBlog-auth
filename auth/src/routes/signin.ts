@@ -16,6 +16,7 @@ router.post('/api/users/signin', [
     body('password').trim().notEmpty().withMessage('Enter password')
 ], async (req: Request, res: Response, next: NextFunction) => {
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         return next(new sbError(VALIDATION_ERR, errors.array()));
     }

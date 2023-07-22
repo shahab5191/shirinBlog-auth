@@ -7,7 +7,7 @@
     "build": "tsc --watch",
     "dev": "nodemon",
     "start": "npm run build && node ./build/index.js",
-    "test": "jest --watchAll --no-cache"
+    "test": "jest --watchAll --no-cache -i"
   },
   "jest": {
     "preset": "ts-jest",

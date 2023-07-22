@@ -1,7 +1,8 @@
 import request from 'supertest'
 import app from '../app'
+import mongoose from 'mongoose';
 
-describe.skip('testing signup route', () => {
+describe('testing signup route', () => {
     it('should return token inside cookie and id with same email as user signed up with', async () => {
         const response = await request(app)
             .post('/api/users/signup')

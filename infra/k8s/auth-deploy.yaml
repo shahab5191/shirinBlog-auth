@@ -13,8 +13,14 @@ spec:
         app: auth
     spec:
       containers:
-        - name: auth
-          image: shahab5191/auth
+      - name: auth
+        image: shahab5191/auth
+        env:
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: jwt-secret
+              key: JWT_SECRET
 ---
 apiVersion: v1
 kind: Service
@@ -24,7 +30,7 @@ spec:
   selector:
     app: auth
   ports:
-    - name: auth
-      protocol: TCP
-      port: 4000
-      targetPort: 4000
+  - name: auth
+    protocol: TCP
+    port: 4000
+    targetPort: 4000

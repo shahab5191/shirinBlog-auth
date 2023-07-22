@@ -1,10 +1,10 @@
 import request from "supertest";
 import app from "../app";
-import { createUser } from "./factory/user";
+import { createUserWithSignup } from "./factory/user";
 
 describe('testing users/current route', () => {
     it('should return user id and email with correct token', async () => {
-        const { headers } = await createUser({});
+        const { headers } = await createUserWithSignup({},'should return user id and email with correct token');
         const cookie = headers['set-cookie']
 
         const response = await request(app)
@@ -35,7 +35,7 @@ describe('testing users/current route', () => {
     })
 
     it('should return error with wrong token in cookie', async () => {
-        const { headers } = await createUser({});
+        const { headers } = await createUserWithSignup({},'should return error with wrong token in cookie');
 
         //here we tamper with token by decoding cookie and changing token inside it and then encoding it again
         const cookie = headers['set-cookie'];
@@ -49,7 +49,7 @@ describe('testing users/current route', () => {
         }
         const cookieObject = JSON.stringify({ jwt: tamperedToken });
         const encodeSession = `session=${Buffer.from(cookieObject).toString('base64')}`;
-        
+
         const response = await request(app)
             .get('/api/users/current')
             .set('Cookie', encodeSession)

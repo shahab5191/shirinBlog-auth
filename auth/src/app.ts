@@ -9,26 +9,32 @@ import { signupRouter } from "./routes/signup";
 import { signoutRouter } from "./routes/signout";
 import { errorHandler } from "./middlewares/errorHandler";
 import sbError from "./errors/sbError";
-import { NOT_FOUND_ERR } from "./errors/errorTypes";
+import { INTERNAL_ERROR, NOT_FOUND_ERR } from "./errors/errorTypes";
+import { protectRoutes } from "./middlewares/protect-routes";
 
 dotenv.config();
 
 const app: Application = express();
+if (!process.env.JWT_SECRET) {
+    throw new sbError(INTERNAL_ERROR, 'jwt secret was not found');
+}
 
 app.set('trust proxy', true);
 app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cookieSession({
-    name:'session',
+    name: 'session',
     signed: false,
     secure: false,
 }));
 
-
-app.use(currentUserRouter)
 app.use(signinRouter)
 app.use(signupRouter)
+
+app.use(protectRoutes)
+
 app.use(signoutRouter)
+app.use(currentUserRouter)
 
 app.all('*', () => {
     throw new sbError(NOT_FOUND_ERR, "Auth");
