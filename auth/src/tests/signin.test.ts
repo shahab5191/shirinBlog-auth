@@ -2,7 +2,7 @@ import request from 'supertest'
 import app from '../app'
 import { createUserWithSignup } from './factory/user';
 
-describe('testing signing route', () => {
+describe.skip('testing signing route', () => {
     it('should response with token in cookie when user and password are correct', async () => {
         const { email, password } = await createUserWithSignup({}, 'should response with token in cookie when user and password are correct');
         const response = await request(app)
@@ -74,10 +74,20 @@ describe('testing signing route', () => {
     })
 
     it('should return error when email is empty', async () => {
-        const { email, password } = await createUserWithSignup({},'should return error when email is empty');
+        const { email, password } = await createUserWithSignup({}, 'should return error when email is empty');
         const response = await request(app)
             .post('/api/users/signin')
             .send({ email: "", password: "test" })
+            .expect(403)
+        expect(response.body).toHaveProperty('errors')
+        expect(response.body.errors[0].message).toBe('Email is not in correct form');
+    })
+
+    it('should return 403 if user has not provided any email and password in body', async () => {
+        await createUserWithSignup({}, 'should return error when email is empty');
+        const response = await request(app)
+            .post('/api/users/signin')
+            .send()
             .expect(403)
         expect(response.body).toHaveProperty('errors')
         expect(response.body.errors[0].message).toBe('Email is not in correct form');

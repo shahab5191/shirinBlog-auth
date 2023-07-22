@@ -30,10 +30,10 @@ app.use(cookieSession({
 
 app.use(signinRouter)
 app.use(signupRouter)
+app.use(signoutRouter)
 
 app.use(protectRoutes)
 
-app.use(signoutRouter)
 app.use(currentUserRouter)
 
 app.all('*', () => {

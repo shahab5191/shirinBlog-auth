@@ -45,7 +45,7 @@ export const errorHandler = (err: sbError, req: Request, res: Response, next: Ne
             errors = userIsNotLoggedIn(err);
             break;
         }
-        case USER_NOT_FOUND:{
+        case USER_NOT_FOUND: {
             statusCode = 404;
             errors = userNotFound(err);
             break;

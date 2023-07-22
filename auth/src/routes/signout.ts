@@ -1,9 +1,10 @@
-import express from 'express'
+import express, { Request, Response, NextFunction } from 'express'
 
 const router = express.Router();
 
-router.get('/api/users/signout', (req,res,next) => {
-    res.status(200).send('<h1>Signout</h1>')
+router.get('/api/users/signout', (req: Request, res: Response, next: NextFunction) => {
+    req.session = {};
+    res.status(200).send({ message: 'signed out successfuly' })
 });
 
 export { router as signoutRouter };
