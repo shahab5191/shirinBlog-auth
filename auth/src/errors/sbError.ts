@@ -1,8 +1,8 @@
-class sbError extends Error {
-    constructor(public errorType: string, public param: any){
-        super(errorType);
-        Object.setPrototypeOf(this, sbError.prototype);
-    }
+class SBError extends Error {
+  constructor (public errorType: string, public param: any) {
+    super(errorType)
+    Object.setPrototypeOf(this, SBError.prototype)
+  }
 }
 
-export default sbError
+export default SBError

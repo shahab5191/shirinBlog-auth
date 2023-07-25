@@ -1,20 +1,21 @@
 import mongoose from 'mongoose'
-import app from './app';
+import app from './app'
 
-const PORT = process.env.PORT || 4000;
-
-const startService = async () => {
-    try {
-        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth').then(() => { console.log('connected to db') })
-    }
-    catch (err) {
-        console.log(err);
-    }
-
-    app.listen(Number(PORT), () => {
-        console.log(`🖥️ is running on port ${PORT}!`)
-    })
-
+let Port = 4000
+if (process.env.PORT !== undefined) {
+  Port = Number(process.env.PORT)
 }
 
-startService()
+const startService = async (): Promise<void> => {
+  try {
+    await mongoose.connect('mongodb://auth-mongo-srv:27017/auth').then(() => { console.log('connected to db') })
+  } catch (err) {
+    console.log(err)
+  }
+
+  app.listen(Number(Port), () => {
+    console.log(`🖥️ is running on port ${Port}!`)
+  })
+}
+
+void startService()

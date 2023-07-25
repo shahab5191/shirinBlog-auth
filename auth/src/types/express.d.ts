@@ -1,2 +1,13 @@
-export { };
+export { }
 
+export declare global{
+  namespace Express{
+    interface Request {
+      currentUser?: {
+        id: string
+        email: string
+        accessLevel: string
+      }
+    }
+  }
+}

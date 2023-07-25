@@ -1,17 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
 
 beforeAll(async () => {
-    await mongoose.connect(process.env['MONGO_URI'] as string);
+  await mongoose.connect(process.env.MONGO_URI as string)
 })
 
 beforeEach(async () => {
-    const collections = await mongoose.connection.db.collections();
-    for (let collection of collections) {
-        await collection.deleteMany({});
-    }
-
+  const collections = await mongoose.connection.db.collections()
+  for (const collection of collections) {
+    await collection.deleteMany({})
+  }
 })
 
 afterAll(async () => {
-    await mongoose.disconnect();
+  await mongoose.disconnect()
 })
