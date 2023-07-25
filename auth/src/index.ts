@@ -11,7 +11,7 @@ const startService = async () => {
         console.log(err);
     }
 
-    app.listen(PORT, () => {
+    app.listen(Number(PORT), () => {
         console.log(`🖥️ is running on port ${PORT}!`)
     })
 

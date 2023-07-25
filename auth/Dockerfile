@@ -1,9 +1,27 @@
-FROM node:alpine
-
+#Build Stage
+FROM node:alpine as build
 WORKDIR /app
-COPY package.json .
+COPY package*.json ./
 RUN npm install
 COPY . .
+CMD ["node", "tsc"]
 
+#Production Stage
+FROM node:alpine as prod
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+RUN apk add --no-cache tini
+COPY --from=build /app/build ./build
+ENV PORT=4000
 EXPOSE 4000
+ENTRYPOINT [ "/sbin/tini", "--" ]
+CMD ["node","./build/index.js"]
+
+#Development Stage
+FROM prod
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --development
+ENTRYPOINT [ "/sbin/tini", "--" ]
 CMD ["npm", "run","dev"]
