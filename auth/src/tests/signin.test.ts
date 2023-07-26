@@ -2,9 +2,9 @@ import request from 'supertest'
 import app from '../app'
 import { createUserWithSignup } from './factory/user'
 
-describe.skip('testing signing route', () => {
+describe('testing signing route', () => {
   it('should response with token in cookie when user and password are correct', async () => {
-    const { email, password } = await createUserWithSignup({}, 'should response with token in cookie when user and password are correct')
+    const { email, password } = await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send({ email, password })
@@ -13,7 +13,7 @@ describe.skip('testing signing route', () => {
   })
 
   it('should return user id and email', async () => {
-    const { email, password } = await createUserWithSignup({}, 'should return user id and email')
+    const { email, password } = await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send({ email, password })
@@ -25,7 +25,7 @@ describe.skip('testing signing route', () => {
   })
 
   it('should return error when email or password are wrong', async () => {
-    const { email, password } = await createUserWithSignup({}, 'should return error when email or password are wrong')
+    const { email, password } = await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send({ email, password: 'wrongpassword' })
@@ -49,7 +49,7 @@ describe.skip('testing signing route', () => {
   })
 
   it('should return error when email or password have not valid form', async () => {
-    const { email, password } = await createUserWithSignup({}, 'should return error when email or password have not valid form')
+    const { email, password } = await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send({ email, password: '' })
@@ -74,7 +74,7 @@ describe.skip('testing signing route', () => {
   })
 
   it('should return error when email is empty', async () => {
-    await createUserWithSignup({}, 'should return error when email is empty')
+    await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send({ email: '', password: 'test' })
@@ -84,7 +84,7 @@ describe.skip('testing signing route', () => {
   })
 
   it('should return 403 if user has not provided any email and password in body', async () => {
-    await createUserWithSignup({}, 'should return error when email is empty')
+    await createUserWithSignup({})
     const response = await request(app)
       .post('/api/users/signin')
       .send()

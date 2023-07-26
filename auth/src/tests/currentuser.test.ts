@@ -2,9 +2,9 @@ import request from 'supertest'
 import app from '../app'
 import { createUserWithSignup } from './factory/user'
 
-describe.skip('testing users/current route', () => {
+describe('testing users/current route', () => {
   it('should return user id and email with correct token', async () => {
-    const { headers } = await createUserWithSignup({}, 'should return user id and email with correct token')
+    const { headers } = await createUserWithSignup({})
     const cookie = headers['set-cookie']
 
     const response = await request(app)
@@ -35,7 +35,7 @@ describe.skip('testing users/current route', () => {
   })
 
   it('should return error with wrong token in cookie', async () => {
-    const { headers } = await createUserWithSignup({}, 'should return error with wrong token in cookie')
+    const { headers } = await createUserWithSignup({})
 
     // here we tamper with token by decoding cookie and changing token inside it and then encoding it again
     const cookie = headers['set-cookie']
