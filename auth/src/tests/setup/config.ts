@@ -1,6 +1,6 @@
 export = {
   Memory: false,
-  IP: '127.0.0.1',
+  IP: 'mongo',
   Port: '27017',
   Database: 'testdb'
 }

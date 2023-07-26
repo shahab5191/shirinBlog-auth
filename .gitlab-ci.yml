@@ -4,6 +4,11 @@ stages:          # List of stages for jobs, and their order of execution
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
+  services:
+    - name: mongo:6.0-jammy
+      alias: mongo
+  environment:
+    "TEST_ENV=gitlab"
   script:
     - echo "Running unit tests..."
     - cd auth
