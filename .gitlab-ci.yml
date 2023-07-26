@@ -4,8 +4,18 @@ stages:          # List of stages for jobs, and their order of execution
 
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
+  before_script:
+    - echo "1- installing mongodb"
+    - apt update && apt install gnupg curl -y
+    - curl -fsSL https://pgp.mongodb.com/server-6.0.asc | \
+      sudo gpg -o /usr/share/keyrings/mongodb-server-6.0.gpg \
+      --dearmor
+    - echo "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-6.0.gpg ] https://repo.mongodb.org/apt/ubuntu jammy/mongodb-org/6.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-6.0.list
+    - apt update
+    - apt install -y mongodb-org
   script:
     - echo "Running unit tests..."
+    - echo "1- Installing Mongodb on Docker"
     - cd auth
     - npm install
     - npm run test
