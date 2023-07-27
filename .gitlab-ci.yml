@@ -25,7 +25,5 @@ unit-test-job:   # This job runs in the test stage.
 
 linter-job:
   stage: lint
-  before_script:
-    - npm i -g eslint
   script:
-    - eslint ./src/*.ts
+    - auth/node_modules/eslint/bin/eslint.js -c auth/.eslintrc.json auth/src/*.ts
