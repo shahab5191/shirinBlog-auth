@@ -4,9 +4,9 @@
   "description": "authentication service",
   "main": "build/index.js",
   "scripts": {
-    "build": "tsc --watch",
+    "build": "tsc",
     "dev": "nodemon",
-    "start": "npm run build && node ./build/index.js",
+    "start": "tsc --watch && node ./build/index.js",
     "test": "jest --no-watch --no-cache -i",
     "test-watch": "jest --watchAll --no-cache -i"
   },

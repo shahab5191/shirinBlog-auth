@@ -18,7 +18,6 @@ const app: Application = express()
 if (process.env.JWT_SECRET === undefined) {
   throw new SBError(INTERNAL_ERROR, 'jwt secret was not found')
 }
-
 app.set('trust proxy', true)
 app.use(express.json())
 app.use(morgan('tiny'))
