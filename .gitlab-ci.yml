@@ -1,5 +1,6 @@
 stages:          # List of stages for jobs, and their order of execution
   - test
+  - lint
   - build
 
 cache:
@@ -21,3 +22,10 @@ unit-test-job:   # This job runs in the test stage.
     - cd auth
     - npm install
     - npm run test
+
+linter-job:
+  stage: lint
+  before_script:
+    - npm i -g eslint
+  script:
+    - eslint ./src/*.ts
