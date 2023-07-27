@@ -8,10 +8,6 @@ cache:
   paths:
     - auth/node_modules/
 
-default:
-  before_script:
-    - docker info
-
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   services:
@@ -33,5 +29,10 @@ linter-job:
 
 build-job:
   stage: build
+  image: docker:20.10.16
+  services:
+    - docker:20.10.16-dind
+  before_script:
+    - docker info
   script:
     - docker build -t auth:latest ./auth
