@@ -19,8 +19,8 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Running unit tests..."
     - export JWT_SECRET=$JWT_SECRET
     - cd auth
-    - ls
     - npm install
+    - ls
     - npm run test
 
 linter-job:
