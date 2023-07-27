@@ -38,5 +38,6 @@ build-job:
   before_script:
     - docker info
   script:
-    - docker build -t auth:latest ./auth
+    - cd auth
+    - docker build -t auth:latest .
     - docker push shahab5191/shirin-blog:auth
