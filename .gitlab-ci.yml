@@ -8,6 +8,10 @@ cache:
   paths:
     - auth/node_modules/
 
+default:
+  before_script:
+    - docker info
+
 unit-test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
   services:
@@ -26,3 +30,8 @@ linter-job:
   stage: lint
   script:
     - auth/node_modules/eslint/bin/eslint.js -c auth/.eslintrc.json auth/src/*.ts
+
+build-job:
+  stage: build
+  script:
+    - docker build -t auth:latest ./auth
