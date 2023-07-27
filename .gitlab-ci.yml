@@ -39,3 +39,4 @@ build-job:
     - docker info
   script:
     - docker build -t auth:latest ./auth
+    - docker push shahab5191/shirin-blog:auth
