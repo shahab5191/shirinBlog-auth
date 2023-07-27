@@ -19,7 +19,7 @@ unit-test-job:   # This job runs in the test stage.
     - echo "Running unit tests..."
     - export JWT_SECRET=$JWT_SECRET
     - cd auth
-    - ls auth/node_modules
+    - ls node_modules/
     - npm install
     - npm run test
 
