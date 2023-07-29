@@ -1,4 +1,4 @@
-apiVersion: skaffold/v3
+apiVersion: skaffold/v4beta6
 kind: Config
 deploy:
   kubectl: {}
@@ -13,6 +13,7 @@ build:
       context: auth
       docker:
         dockerfile: Dockerfile
+        target: dev
       sync:
         manual:
           - src: 'src/**/*.ts'

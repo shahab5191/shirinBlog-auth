@@ -1,4 +1,4 @@
-#Build Stage
+#Base image
 FROM node:alpine as base
 ENV NODE_ENV=production
 WORKDIR /opt
@@ -6,9 +6,13 @@ COPY package*.json ./
 RUN npm ci\
   && npm cache clean --force
 
+#Build Stage
 FROM base as build
+ENV NODE_ENV=development
+ENV PATH=/opt/node_modules/.bin:$PATH
 WORKDIR /opt/app
 COPY . .
+RUN npm install
 RUN npm run build
 
 #Development Stage
