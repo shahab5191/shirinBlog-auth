@@ -1,15 +1,15 @@
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
-import { SERVER_ERR, VALIDATION_ERR } from '../errors/errorTypes'
-import SBError from '../errors/sbError'
+import { SBError, SERVER_ERR, VALIDATION_ERR } from '@shahab5191/shared'
 
 interface TokenInputs {
   id: string
   email: string
+  accessLevel: string
 }
 
 const createToken = (inputs: TokenInputs): string => {
-  const token = jwt.sign({ id: inputs.id, email: inputs.email }, 'secret')
+  const token = jwt.sign({ id: inputs.id, email: inputs.email, accessLevel: inputs.accessLevel }, 'secret')
   return token
 }
 

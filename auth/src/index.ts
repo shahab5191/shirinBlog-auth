@@ -11,6 +11,7 @@ const startService = async (): Promise<void> => {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth').then(() => { console.log('connected to db') })
   } catch (err) {
     console.log(err)
+    return
   }
 
   app.listen(Number(Port), () => {

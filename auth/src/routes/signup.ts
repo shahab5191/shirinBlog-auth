@@ -1,7 +1,6 @@
 import express, { type NextFunction, type Request, type Response } from 'express'
 import { body, validationResult } from 'express-validator'
-import SBError from '../errors/sbError'
-import { USER_CREATION_ERR, VALIDATION_ERR } from '../errors/errorTypes'
+import { SBError, USER_CREATION_ERR, VALIDATION_ERR } from '@shahab5191/shared'
 import User from '../models/user'
 import { createToken, hashPassword } from '../utils/encryption'
 
@@ -28,11 +27,11 @@ router.post('/api/users/signup', [
   const newUser = new User({ email, password: hashedPassword, accessLevel: 'user' })
   await newUser.save()
 
-  const token = createToken({ email: newUser.email, id: newUser.id })
+  const token = createToken({ email: newUser.email, id: newUser.id, accessLevel: newUser.accessLevel })
 
   req.session = { jwt: token }
 
-  res.status(201).send({ email: newUser.email, id: newUser.id })
+  res.status(201).send({ email: newUser.email, id: newUser.id, accessLevel: newUser.accessLevel })
 })
 
 export { router as signupRouter }

@@ -1,7 +1,6 @@
 import express, { type Request, type Response, type NextFunction } from 'express'
 import { body, validationResult } from 'express-validator'
-import SBError from '../errors/sbError'
-import { WRONG_CREDENTIALS, VALIDATION_ERR } from '../errors/errorTypes'
+import { SBError, WRONG_CREDENTIALS, VALIDATION_ERR } from '@shahab5191/shared/build'
 import User from '../models/user'
 import { comparePassword, createToken } from '../utils/encryption'
 
@@ -32,8 +31,8 @@ router.post('/api/users/signin', [
     next(new SBError(WRONG_CREDENTIALS, '')); return
   }
 
-  const token = createToken({ id: requestedUser.id, email: requestedUser.email })
+  const token = createToken({ id: requestedUser.id, email: requestedUser.email, accessLevel: requestedUser.accessLevel })
   req.session = { jwt: token }
-  res.status(200).send({ email: requestedUser.email, id: requestedUser.id })
+  res.status(200).send({ email: requestedUser.email, id: requestedUser.id, accessLevel: requestedUser.accessLevel })
 })
 export { router as signinRouter }

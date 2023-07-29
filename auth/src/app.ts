@@ -7,10 +7,7 @@ import { currentUserRouter } from './routes/currentuser'
 import { signinRouter } from './routes/signin'
 import { signupRouter } from './routes/signup'
 import { signoutRouter } from './routes/signout'
-import { errorHandler } from './middlewares/errorHandler'
-import SBError from './errors/sbError'
-import { INTERNAL_ERROR, NOT_FOUND_ERR } from './errors/errorTypes'
-import { protectRoutes } from './middlewares/protect-routes'
+import { SBError, errorHandler, protectRoutes, INTERNAL_ERROR, NOT_FOUND_ERR } from '@shahab5191/shared'
 
 dotenv.config()
 
