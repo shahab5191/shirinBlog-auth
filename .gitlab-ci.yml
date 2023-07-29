@@ -40,5 +40,5 @@ build-job:
   script:
     - cd auth
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
-    - docker build -t shahab5191/shirin-blog:auth-dev .
-    - docker push shahab5191/shirin-blog:auth-dev
+    - docker build -t shahab5191/shirin-blog:auth-prod .
+    - docker push shahab5191/shirin-blog:auth-prod
