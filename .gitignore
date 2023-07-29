@@ -1,4 +1,5 @@
 shared/
 build/
 node_modules/
-
+.git
+.env
