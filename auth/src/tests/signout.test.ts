@@ -18,11 +18,11 @@ describe('testing signout functionality', () => {
       .set('Cookie', Cookie)
       .send()
       .expect(200)
-    expect(response.headers['set-cookie']).not.toBeDefined()
 
     // we expect after signing out, when we try to signin, server returns error
     await request(app)
       .post('/api/users/signin')
+      .set('Cookie', response.headers['set-cookie'])
       .send()
       .expect(403)
   })
