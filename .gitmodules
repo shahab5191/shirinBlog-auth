@@ -1,0 +1,3 @@
+[submodule "shirinBlog-dev-sub"]
+	path = shirinBlog-dev-sub
+	url = https://github.com/shahab5191/shirinBlog-dev-sub.git
