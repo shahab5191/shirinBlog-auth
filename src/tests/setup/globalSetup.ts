@@ -3,7 +3,7 @@ import * as mongoose from 'mongoose'
 import config from './config'
 import 'dotenv/config'
 
-export = async function globalSetup () {
+export default async function globalSetup () {
   if (config.Memory) {
     const instance = await MongoMemoryServer.create()
     const uri = instance.getUri();

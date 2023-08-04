@@ -30,7 +30,6 @@
   "license": "ISC",
   "dependencies": {
     "@shahab5191/shared": "^1.0.7",
-    "@types/mongoose": "^5.11.97",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
