@@ -8,7 +8,7 @@ describe('testing users/current route', () => {
     const cookie = headers['set-cookie']
 
     const response = await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .set('Cookie', cookie[0].split(';')[0])
       .send()
       .expect(200)
@@ -21,14 +21,14 @@ describe('testing users/current route', () => {
 
   it('should return error if cookie is not available', async () => {
     await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .send()
       .expect(403)
   })
 
   it('should return error with wrong cookie', async () => {
     await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .set('Cookie', 'test')
       .send()
       .expect(403)
@@ -51,7 +51,7 @@ describe('testing users/current route', () => {
     const encodeSession = `session=${Buffer.from(cookieObject).toString('base64')}`
 
     const response = await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .set('Cookie', encodeSession)
       .send()
       .expect(404)

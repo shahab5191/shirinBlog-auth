@@ -8,20 +8,20 @@ describe('testing signout functionality', () => {
     const Cookie = headers['set-cookie']
 
     await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .set('Cookie', Cookie)
       .send()
       .expect(200)
 
     const response = await request(app)
-      .get('/api/users/signout')
+      .get('/api/v1/users/signout')
       .set('Cookie', Cookie)
       .send()
       .expect(200)
 
     // we expect after signing out, when we try to signin, server returns error
     await request(app)
-      .post('/api/users/signin')
+      .post('/api/v1/users/signin')
       .set('Cookie', response.headers['set-cookie'])
       .send()
       .expect(403)
@@ -29,12 +29,12 @@ describe('testing signout functionality', () => {
 
   it('should return 200 if user is not already signed in', async () => {
     await request(app)
-      .get('/api/users/current')
+      .get('/api/v1/users/current')
       .send()
       .expect(403)
 
     await request(app)
-      .get('/api/users/signout')
+      .get('/api/v1/users/signout')
       .send()
       .expect(200)
   })

@@ -6,11 +6,11 @@ import { comparePassword, createToken } from '../utils/encryption'
 
 const router = express.Router()
 
-router.get('/api/users/signin', (req, res, next) => {
+router.get('/api/v1/users/signin', (req, res, next) => {
   res.status(200).send('<h1>Signin</h1>')
 })
 
-router.post('/api/users/signin', [
+router.post('/api/v1/users/signin', [
   body('email').isEmail().withMessage('Email is not in correct form'),
   body('password').trim().notEmpty().withMessage('Enter password')
 ], async (req: Request, res: Response, next: NextFunction) => {

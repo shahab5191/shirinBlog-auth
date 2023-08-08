@@ -28,7 +28,7 @@ const fakeUser = (): FakeUserResponse => {
 const createUserWithSignup = async (attr: CreateUserAttr): Promise<CreateUserResponse> => {
   const { email, password } = fakeUser()
   const response = await request(app)
-    .post('/api/users/signup')
+    .post('/api/v1/users/signup')
     .send({ email: attr.email === null ? attr.email : email, password: attr.password === null ? attr.password : password })
     .expect(201)
   return { email, password, headers: response.headers }

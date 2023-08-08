@@ -6,7 +6,7 @@ import { createToken, hashPassword } from '../utils/encryption'
 
 const router = express.Router()
 
-router.post('/api/users/signup', [
+router.post('/api/v1/users/signup', [
   body('email').isEmail().withMessage('Email is not Valid'),
   body('password').trim().isLength({ min: 4, max: 20 }).withMessage('Password must be between 4 and 20 characters')
 ], async (req: Request, res: Response, next: NextFunction) => {
